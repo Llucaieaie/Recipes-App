@@ -44,11 +44,11 @@ class RecipeCard extends StatelessWidget {
         children: [
           Align(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
+              padding: EdgeInsets.symmetric(horizontal: 50.0),
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 19,
+                  fontSize: 16,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -58,48 +58,75 @@ class RecipeCard extends StatelessWidget {
             alignment: Alignment.center,
           ),
           Align(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(5),
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(15),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  )),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 18,
+                        ),
+                        SizedBox(width: 7),
+                        Text(rating),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      SizedBox(width: 7),
-                      Text(rating),
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.schedule,
+                          color: Colors.yellow,
+                          size: 18,
+                        ),
+                        SizedBox(width: 7),
+                        Text(cookTime),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.schedule,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      SizedBox(width: 7),
-                      Text(cookTime),
-                    ],
-                  ),
-                )
-              ],
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.schedule,
+                          color: Colors.yellow,
+                          size: 18,
+                        ),
+                        SizedBox(width: 7),
+                        Text(cookTime),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
             alignment: Alignment.bottomLeft,
           ),
