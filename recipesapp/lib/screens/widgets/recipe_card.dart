@@ -42,69 +42,142 @@ class RecipeCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Align(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 19,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            alignment: Alignment.center,
-          ),
+          RecipeTitle(title: title),
+          Marker(),
           Align(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: EdgeInsets.all(5),
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      SizedBox(width: 7),
-                      Text(rating),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.schedule,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      SizedBox(width: 7),
-                      Text(cookTime),
-                    ],
-                  ),
-                )
+                RecipeRating(rating: rating),
+                RecipeTime(cookTime: cookTime)
               ],
             ),
             alignment: Alignment.bottomLeft,
           ),
         ],
       ),
+    );
+  }
+}
+
+class RecipeTime extends StatelessWidget {
+  const RecipeTime({
+    super.key,
+    required this.cookTime,
+  });
+
+  final String cookTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.schedule,
+            color: Colors.yellow,
+            size: 18,
+          ),
+          SizedBox(width: 7),
+          Text(cookTime),
+        ],
+      ),
+    );
+  }
+}
+
+class RecipeRating extends StatelessWidget {
+  const RecipeRating({
+    super.key,
+    required this.rating,
+  });
+
+  final String rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.star,
+            color: Colors.yellow,
+            size: 18,
+          ),
+          SizedBox(width: 7),
+          Text(rating),
+        ],
+      ),
+    );
+  }
+}
+
+class Marker extends StatefulWidget {
+  const Marker({Key? key}) : super(key: key);
+
+  @override
+  _MarkerState createState() => _MarkerState();
+}
+
+class _MarkerState extends State<Marker> {
+  bool isBookmarked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isBookmarked = !isBookmarked;
+        });
+      },
+      child: Align(
+        child: Icon(
+          isBookmarked ? Icons.bookmark_add : Icons.bookmark_add_outlined,
+          size: 35,
+          color: Colors.yellow,
+        ),
+        alignment: Alignment(0.9, -1),
+      ),
+    );
+  }
+}
+
+class RecipeTitle extends StatelessWidget {
+  const RecipeTitle({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 19,
+          ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      alignment: Alignment.center,
     );
   }
 }

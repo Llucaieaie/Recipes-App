@@ -43,6 +43,30 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: 1, //_currentIndex,
+          // onTap: (index) {
+          //   // Handle navigation to different pages based on index
+          //   setState(() {
+          //     _currentIndex = index;
+          //     // Add logic to navigate to different pages based on index
+          //   });
+          // },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark),
+              label: 'Saved',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Shopping list',
+            ),
+          ],
+        ),
         body: _isLoading
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(
