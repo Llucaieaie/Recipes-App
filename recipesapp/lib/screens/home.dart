@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipesapp/models/category.dart';
 import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/models/recipeAPI.dart';
 import 'package:recipesapp/screens/widgets/recipe_card.dart';
@@ -69,14 +70,58 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: _isLoading
             ? Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                itemCount: _recipes.length,
-                itemBuilder: (context, index) {
-                  return RecipeCard(
-                      title: _recipes[index].name,
-                      cookTime: _recipes[index].time,
-                      rating: _recipes[index].rating.toString(),
-                      thumbnailUrl: _recipes[index].images);
-                }));
+            : Column(
+              children: [
+                RecipesRow(recipes: _recipes, startIndex: 0, endIndex: 5,),
+                RecipesRow(recipes: _recipes, startIndex: 5, endIndex: 10,),
+              ],
+            ));
+  }
+}
+
+class RecipesCategory extends StatelessWidget {
+  const RecipesCategory({
+    Key? key,
+    required this.categories,
+  }) : super(key: key);
+
+  final List<Categories> categories;
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(categories.category);
+  }
+}
+
+class RecipesRow extends StatelessWidget {
+  const RecipesRow({
+    Key? key,
+    required this.recipes,
+    required this.startIndex,
+    required this.endIndex,
+  }) : super(key: key);
+
+  final List<Recipe> recipes;
+  final int startIndex;
+  final int endIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 180,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: endIndex - startIndex,
+        itemBuilder: (context, index) {
+          final recipeIndex = startIndex + index;
+          return RecipeCard(
+            title: recipes[recipeIndex].name,
+            cookTime: recipes[recipeIndex].time,
+            rating: recipes[recipeIndex].rating.toString(),
+            thumbnailUrl: recipes[recipeIndex].images,
+          );
+        },
+      ),
+    );
   }
 }

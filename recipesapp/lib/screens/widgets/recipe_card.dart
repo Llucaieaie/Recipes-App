@@ -14,8 +14,8 @@ class RecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.fromLTRB(15, 10, 0, 15),
+      width: 350,
       height: 180,
       decoration: BoxDecoration(
         color: Colors.black,
