@@ -24,7 +24,7 @@ class App extends StatelessWidget {
           primaryColor: Colors.white,
           textTheme:
               const TextTheme(bodyMedium: TextStyle(color: Colors.white))),
-      home: FavouritesScreen(),
+      home: HomeScreen(),
     );
   }
 }

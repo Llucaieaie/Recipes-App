@@ -71,11 +71,19 @@ class _HomeScreenState extends State<HomeScreen> {
         body: _isLoading
             ? Center(child: CircularProgressIndicator())
             : Column(
-              children: [
-                RecipesRow(recipes: _recipes, startIndex: 0, endIndex: 5,),
-                RecipesRow(recipes: _recipes, startIndex: 5, endIndex: 10,),
-              ],
-            ));
+                children: [
+                  RecipesRow(
+                    recipes: _recipes,
+                    startIndex: 0,
+                    endIndex: 5,
+                  ),
+                  RecipesRow(
+                    recipes: _recipes,
+                    startIndex: 5,
+                    endIndex: 10,
+                  ),
+                ],
+              ));
   }
 }
 
