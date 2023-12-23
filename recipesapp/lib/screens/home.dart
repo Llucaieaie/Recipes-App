@@ -97,7 +97,7 @@ class RecipesCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(categories.category);
+    return const Text("categories.category");
   }
 }
 
