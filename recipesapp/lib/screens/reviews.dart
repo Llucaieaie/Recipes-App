@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:recipesapp/models/review.dart';
 import 'package:recipesapp/screens/widgets/review_card.dart';
+import 'package:recipesapp/models/recipeAPI.dart';
 
-class ReviewScreen extends StatelessWidget {
+class ReviewScreen extends StatefulWidget {
   const ReviewScreen({super.key});
 
   @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> {
+  late List<Review> _reviews;
+
+  bool _isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    await Future.wait([getReviews()]);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> getReviews() async {
+    _reviews = await RecipeApi.getReviews();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -19,11 +45,6 @@ class ReviewScreen extends StatelessWidget {
             Text('Favourite'),
           ],
         ),
-      ),
-      body: const Column(
-        children: [
-          ReviewCard(),
-        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1, //_currentIndex,
@@ -49,6 +70,11 @@ class ReviewScreen extends StatelessWidget {
           ),
         ],
       ),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [],
+            ),
     );
   }
 }

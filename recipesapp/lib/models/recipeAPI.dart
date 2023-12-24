@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/models/category.dart';
 import 'package:http/http.dart' as http;
+import 'package:recipesapp/models/review.dart';
 
 class RecipeApi {
   static Future<List<Recipe>> getRecipe() async {
@@ -43,5 +44,25 @@ class RecipeApi {
     }
 
     return Categories.categoriesFromSnapshot(_temp);
+  }
+
+  static Future<List<Review>> getReviews() async {
+    var uri = Uri.https('yummly2.p.rapidapi.com', '/reviews/list', {
+      "limit": "10",
+      "offset": "0",
+      "globalId": "a8d6747a-bfaa-46a7-92fb-892e3f76b264"
+    });
+
+    final response = await http.get(uri, headers: {
+      "x-rapidapi-key": "87e6da0ff1msha62a3f9fc8d01fcp19cda6jsn40de3f0698a5",
+      "x-rapidapi-host": "yummly2.p.rapidapi.com",
+    });
+
+    Map data = jsonDecode(response.body);
+    List _temp = [];
+
+    for (var i in data['reviews']) {}
+
+    return Review.reviewsFromSnapshot(_temp);
   }
 }
