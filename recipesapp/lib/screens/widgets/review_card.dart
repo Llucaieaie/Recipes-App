@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:recipesapp/models/review.dart';
 import 'package:recipesapp/screens/widgets/rating_bar.dart';
 
 class ReviewCard extends StatelessWidget {
-  final String userName;
-  final String userImageUrl;
-  final String rating;
-  final String date;
-  final String text;
-  const ReviewCard(
-      {super.key,
-      required this.userName,
-      required this.userImageUrl,
-      required this.rating,
-      required this.date,
-      required this.text});
+  const ReviewCard({
+    super.key,
+    required this.reviews,
+    required this.reviewID,
+  });
 
+  final List<Review> reviews;
+  final int reviewID;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +22,7 @@ class ReviewCard extends StatelessWidget {
               backgroundColor: Colors.white,
               child: CircleAvatar(
                 radius: 23,
-                backgroundImage: NetworkImage(userImageUrl),
+                backgroundImage: NetworkImage(reviews[reviewID].userImage),
               ),
             ),
             SizedBox(width: 10),
@@ -34,7 +30,7 @@ class ReviewCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  userName,
+                  reviews[reviewID].name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -42,7 +38,7 @@ class ReviewCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  date,
+                  reviews[reviewID].date,
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.blueGrey,
@@ -55,11 +51,35 @@ class ReviewCard extends StatelessWidget {
             Align(
               alignment: Alignment.topRight,
               child: RatingBar(
-                rating: double.parse(rating),
+                rating: reviews[reviewID].rating.toDouble(),
               ),
             )
           ],
         ),
+        SizedBox(
+          height: 5,
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                " '" + reviews[reviewID].text + "'",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: const Color.fromARGB(255, 54, 67, 73)),
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          thickness: 0.3,
+          color: Colors.grey,
+        )
       ],
     );
   }

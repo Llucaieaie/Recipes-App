@@ -1,7 +1,7 @@
 class Review {
   final String name;
   final String userImage;
-  final double rating;
+  final int rating;
   final String date;
   final String text;
 
@@ -14,8 +14,10 @@ class Review {
   factory Review.fromJson(dynamic json) {
     return Review(
         name: json['user']['profileName'] as String,
-        userImage: json['user']['pictureUrl'],
-        rating: json['rating'] as double,
+        userImage: (json['user']['pictureUrl'] != null)
+            ? json['user']['pictureUrl'] as String
+            : "",
+        rating: json['rating'] as int,
         date: json['createTime'] as String,
         text: json['text'] as String);
   }

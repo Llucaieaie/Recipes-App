@@ -61,7 +61,9 @@ class RecipeApi {
     Map data = jsonDecode(response.body);
     List _temp = [];
 
-    for (var i in data['reviews']) {}
+    for (var i in data['reviews']) {
+      _temp.add(i);
+    }
 
     return Review.reviewsFromSnapshot(_temp);
   }
