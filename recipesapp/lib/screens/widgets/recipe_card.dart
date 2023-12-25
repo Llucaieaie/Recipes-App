@@ -1,62 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:recipesapp/screens/description.dart';
 
 class RecipeCard extends StatelessWidget {
   final String title;
   final String rating;
   final String cookTime;
   final String thumbnailUrl;
+  //final String description;
   RecipeCard({
     required this.title,
     required this.cookTime,
     required this.rating,
     required this.thumbnailUrl,
+    //required this.description,
   });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(15, 10, 0, 15),
-      width: 350,
-      height: 180,
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.6),
-            offset: Offset(
-              0.0,
-              10.0,
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DescriptionScreen(title: title, rating: rating, cookTime: cookTime, thumbnailUrl: thumbnailUrl,)),
+          );
+        },
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(15, 10, 0, 15),
+          width: 350,
+          height: 180,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: Offset(
+                  0.0,
+                  10.0,
+                ),
+                blurRadius: 10.0,
+                spreadRadius: -6.0,
+              ),
+            ],
+            image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.35),
+                BlendMode.multiply,
+              ),
+              image: NetworkImage(thumbnailUrl),
+              fit: BoxFit.cover,
             ),
-            blurRadius: 10.0,
-            spreadRadius: -6.0,
           ),
-        ],
-        image: DecorationImage(
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.35),
-            BlendMode.multiply,
+          child: Stack(
+            children: [
+              RecipeTitle(title: title),
+              Marker(),
+              Align(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RecipeRating(rating: rating),
+                    RecipeTime(cookTime: cookTime)
+                  ],
+                ),
+                alignment: Alignment.bottomLeft,
+              ),
+            ],
           ),
-          image: NetworkImage(thumbnailUrl),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          RecipeTitle(title: title),
-          Marker(),
-          Align(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RecipeRating(rating: rating),
-                RecipeTime(cookTime: cookTime)
-              ],
-            ),
-            alignment: Alignment.bottomLeft,
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
 

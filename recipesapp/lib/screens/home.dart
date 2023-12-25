@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:recipesapp/models/category.dart';
 import 'package:recipesapp/models/recipe.dart';
@@ -80,23 +78,23 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        body: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : Column(
+         body: _isLoading
+             ? Center(child: CircularProgressIndicator())
+             : Column(
                 children: [
-                  RecipesCategory(categories: _categories, categoryId: Random().nextInt(12),),
+                  RecipesCategory(categories: _categories, categoryId: 0,),
                   RecipesRow(
                     recipes: _recipes,
                     startIndex: 0,
                     endIndex: 5,
                   ),
-                  RecipesCategory(categories: _categories, categoryId: Random().nextInt(12),),                  
+                  RecipesCategory(categories: _categories, categoryId: 1,),                  
                   RecipesRow(
                     recipes: _recipes,
                     startIndex: 5,
                     endIndex: 10,
                   ),
-                  RecipesCategory(categories: _categories, categoryId: Random().nextInt(12),),
+                  RecipesCategory(categories: _categories, categoryId: 3,),
                 ],
               ));
   }
