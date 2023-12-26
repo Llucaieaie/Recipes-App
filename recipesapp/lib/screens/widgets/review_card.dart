@@ -66,13 +66,15 @@ class ReviewCard extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text(
-                " '" + reviews[reviewID].text + "'",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: const Color.fromARGB(255, 54, 67, 73)),
-              ),
+              Expanded(
+                child: Text(
+                  " '" + reviews[reviewID].text + "'",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: const Color.fromARGB(255, 54, 67, 73)),
+                ),
+              )
             ],
           ),
         ),

@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _recipes = await RecipeApi.getRecipe();
   }
 
-    Future<void> getCategory() async {
+  Future<void> getCategory() async {
     _categories = await RecipeApi.getCategory();
   }
 
@@ -78,23 +78,32 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-         body: _isLoading
-             ? Center(child: CircularProgressIndicator())
-             : Column(
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Column(
                 children: [
-                  RecipesCategory(categories: _categories, categoryId: 0,),
+                  RecipesCategory(
+                    categories: _categories,
+                    categoryId: 0,
+                  ),
                   RecipesRow(
                     recipes: _recipes,
                     startIndex: 0,
                     endIndex: 5,
                   ),
-                  RecipesCategory(categories: _categories, categoryId: 1,),                  
+                  RecipesCategory(
+                    categories: _categories,
+                    categoryId: 1,
+                  ),
                   RecipesRow(
                     recipes: _recipes,
                     startIndex: 5,
                     endIndex: 10,
                   ),
-                  RecipesCategory(categories: _categories, categoryId: 3,),
+                  RecipesCategory(
+                    categories: _categories,
+                    categoryId: 3,
+                  ),
                 ],
               ));
   }
@@ -112,7 +121,6 @@ class RecipesCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       alignment: Alignment.centerLeft,
       margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
@@ -127,7 +135,6 @@ class RecipesCategory extends StatelessWidget {
     );
   }
 }
-
 
 class RecipesRow extends StatelessWidget {
   const RecipesRow({
@@ -155,6 +162,7 @@ class RecipesRow extends StatelessWidget {
             cookTime: recipes[recipeIndex].time,
             rating: recipes[recipeIndex].rating.toString(),
             thumbnailUrl: recipes[recipeIndex].images,
+            globalId: recipes[recipeIndex].globalID,
           );
         },
       ),

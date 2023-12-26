@@ -20,7 +20,7 @@ class RecipeApi {
     Map data = jsonDecode(response.body);
     List _temp = [];
 
-    for (var i in data['feed']) {    
+    for (var i in data['feed']) {
       _temp.add(i['content']['details']);
     }
 
@@ -46,11 +46,11 @@ class RecipeApi {
     return Categories.categoriesFromSnapshot(_temp);
   }
 
-  static Future<List<Review>> getReviews() async {
+  static Future<List<Review>> getReviews(String id) async {
     var uri = Uri.https('yummly2.p.rapidapi.com', '/reviews/list', {
       "limit": "10",
       "offset": "0",
-      "globalId": "a8d6747a-bfaa-46a7-92fb-892e3f76b264"
+      "globalId": id,
     });
 
     final response = await http.get(uri, headers: {

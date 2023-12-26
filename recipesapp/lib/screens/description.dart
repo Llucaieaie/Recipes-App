@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/screens/home.dart';
+import 'package:recipesapp/screens/reviews.dart';
 
 class DescriptionScreen extends StatefulWidget {
   final String title;
   final String rating;
   final String cookTime;
   final String thumbnailUrl;
+  final String globalId;
   //final String description;
 
   const DescriptionScreen({
@@ -14,6 +16,7 @@ class DescriptionScreen extends StatefulWidget {
     required this.cookTime,
     required this.rating,
     required this.thumbnailUrl,
+    required this.globalId,
     //required this.description,
   });
 
@@ -61,7 +64,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                     alignment: Alignment.bottomRight,
                     child: Container(
                       width: 80,
-                      height: 50,
+                      height: 65,
                       child: Column(
                         children: [
                           Row(
@@ -80,7 +83,20 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                               Spacer(),
                             ],
                           ),
-                          Text("See reviews", style: TextStyle(fontSize: 12, color: Colors.yellow))
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ReviewScreen(
+                                          reviewId: widget.globalId)));
+                            },
+                            child: const Text(
+                              "Reviews",
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.yellow),
+                            ),
+                          ),
                         ],
                       ),
                     ),

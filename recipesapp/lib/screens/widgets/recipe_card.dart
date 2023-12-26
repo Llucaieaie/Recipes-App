@@ -6,14 +6,16 @@ class RecipeCard extends StatelessWidget {
   final String rating;
   final String cookTime;
   final String thumbnailUrl;
+  final String globalId;
   //final String description;
-  RecipeCard({
-    required this.title,
-    required this.cookTime,
-    required this.rating,
-    required this.thumbnailUrl,
-    //required this.description,
-  });
+  RecipeCard(
+      {required this.title,
+      required this.cookTime,
+      required this.rating,
+      required this.thumbnailUrl,
+      required this.globalId
+      //required this.description,
+      });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,8 +23,13 @@ class RecipeCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    DescriptionScreen(title: title, rating: rating, cookTime: cookTime, thumbnailUrl: thumbnailUrl,)),
+                builder: (context) => DescriptionScreen(
+                      title: title,
+                      rating: rating,
+                      cookTime: cookTime,
+                      thumbnailUrl: thumbnailUrl,
+                      globalId: globalId,
+                    )),
           );
         },
         child: Container(

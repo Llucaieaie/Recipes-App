@@ -4,7 +4,8 @@ import 'package:recipesapp/screens/widgets/review_card.dart';
 import 'package:recipesapp/models/recipeAPI.dart';
 
 class ReviewScreen extends StatefulWidget {
-  const ReviewScreen({super.key});
+  const ReviewScreen({super.key, required this.reviewId});
+  final String reviewId;
 
   @override
   State<ReviewScreen> createState() => _ReviewScreenState();
@@ -28,7 +29,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
   }
 
   Future<void> getReviews() async {
-    _reviews = await RecipeApi.getReviews();
+    _reviews = await RecipeApi.getReviews(widget.reviewId);
   }
 
   Widget build(BuildContext context) {
