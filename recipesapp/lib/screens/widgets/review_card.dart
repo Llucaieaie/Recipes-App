@@ -19,7 +19,7 @@ class ReviewCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 25,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.lightGreen,
               child: CircleAvatar(
                 radius: 23,
                 backgroundImage: NetworkImage(reviews[reviewID].userImage),
