@@ -28,91 +28,146 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: 1,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark),
+              label: 'Saved',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Shopping list',
+            ),
+          ],
+        ),
         body: Column(
-      children: [
-        Expanded(
-            child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.35),
-                      BlendMode.multiply,
-                    ),
-                    image: NetworkImage(widget.thumbnailUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Stack(children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(
-                            context); // Navigator.pop goes back to the previous screen
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            color: Colors.white54,
-                            borderRadius: BorderRadius.circular(100)),
-                        child: Icon(Icons.keyboard_backspace),
+          children: [
+            Expanded(
+                child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.35),
+                          BlendMode.multiply,
+                        ),
+                        image: NetworkImage(widget.thumbnailUrl),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      width: 80,
-                      height: 65,
-                      child: Column(
-                        children: [
-                          Row(
+                    child: Stack(children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(
+                                context); // Navigator.pop goes back to the previous screen
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: Colors.white54,
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Icon(Icons.keyboard_backspace),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          width: 80,
+                          height: 65,
+                          child: Column(
                             children: [
-                              Spacer(),
-                              Text(
-                                widget.rating,
-                                style: TextStyle(
-                                    color: Colors.yellow, fontSize: 20),
+                              Row(
+                                children: [
+                                  Spacer(),
+                                  Text(
+                                    widget.rating,
+                                    style: TextStyle(
+                                        color: Colors.yellow, fontSize: 20),
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 28,
+                                    color: Colors.yellow,
+                                  ),
+                                  Spacer(),
+                                ],
                               ),
-                              Icon(
-                                Icons.star,
-                                size: 28,
-                                color: Colors.yellow,
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ReviewScreen(
+                                              reviewId: widget.globalId)));
+                                },
+                                child: const Text(
+                                  "Reviews",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.yellow),
+                                ),
                               ),
-                              Spacer(),
                             ],
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ReviewScreen(
-                                          reviewId: widget.globalId)));
-                            },
-                            child: const Text(
-                              "Reviews",
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.yellow),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
+                      Marker(),
+                    ]))),
+            Expanded(
+                child: Column(
+                  children: [
+                    RecipeTitle(title: widget.title),
+                    RecipeDescription(
+                      description: widget.description,
                     ),
-                  ),
-                  Marker(),
-                ]))),
-        Expanded(
-          child: 
-          Column(
-            children: [
-              RecipeTitle(title: widget.title),
-              RecipeDescription(description: widget.description,),
-            ],
-          ))
-      ],
-    ));
+                    Spacer(),
+                    RecipeTime(time: widget.cookTime),
+                    StartButton()
+                  ],
+                ))
+          ],
+        ));
+  }
+}
+
+class StartButton extends StatelessWidget {
+  const StartButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: ElevatedButton(
+        onPressed: () {
+          // Recipe ingredients and steps screen
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.greenAccent,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            shadowColor: Colors.black, // Sombra del botón
+            padding: EdgeInsets.all(20)),
+        child: Text(
+          'Start cooking!', // Texto dentro del botón
+          style: TextStyle(
+            fontSize: 18, // Tamaño de fuente
+            color: Colors.white, // Color del texto
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -158,14 +213,12 @@ class RecipeTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 15, 0, 25),
+        margin: EdgeInsets.fromLTRB(0, 50, 0, 25),
         padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-          ),
+              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
           textAlign: TextAlign.center,
@@ -187,18 +240,53 @@ class RecipeDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        //margin: EdgeInsets.fromLTRB(0, 15, 0, 25),
-        padding: EdgeInsets.symmetric(horizontal: 25.0),
-        child: Text(
-          description,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black,
-          ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 8,
-          textAlign: TextAlign.justify,
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
+      child: Text(
+        description,
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.black,
         ),
-      );
+        overflow: TextOverflow.ellipsis,
+        maxLines: 8,
+        textAlign: TextAlign.justify,
+      ),
+    );
+  }
+}
+
+class RecipeTime extends StatelessWidget {
+  const RecipeTime({
+    super.key,
+    required this.time,
+  });
+
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      child: Container(
+        child: Row(
+          children: [
+            Spacer(),
+            Text(
+              time,
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Icon(Icons.schedule),
+            Spacer()
+          ],
+        ),
+      ),
+      alignment: Alignment.center,
+    );
   }
 }
