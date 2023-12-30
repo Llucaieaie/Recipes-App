@@ -100,10 +100,78 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  Marker(),
                 ]))),
-        Expanded(child: Container())
+        Expanded(
+          child: 
+          Column(
+            children: [
+              RecipeTitle(title: widget.title),
+              Text("data", style: TextStyle(color: Colors.black),),
+            ],
+          ))
       ],
     ));
+  }
+}
+
+class Marker extends StatefulWidget {
+  const Marker({Key? key}) : super(key: key);
+
+  @override
+  _MarkerState createState() => _MarkerState();
+}
+
+class _MarkerState extends State<Marker> {
+  bool isBookmarked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isBookmarked = !isBookmarked;
+        });
+      },
+      child: Align(
+        child: Icon(
+          isBookmarked ? Icons.bookmark_add : Icons.bookmark_add_outlined,
+          size: 70,
+          color: Colors.yellow,
+        ),
+        alignment: Alignment(1, -1.05),
+      ),
+    );
+  }
+}
+
+class RecipeTitle extends StatelessWidget {
+  const RecipeTitle({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      child: Container(
+        margin: EdgeInsets.fromLTRB(0, 15, 0, 25),
+        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.black,
+          ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      alignment: Alignment.center,
+    );
   }
 }
