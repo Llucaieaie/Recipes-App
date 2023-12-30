@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    print("text");
     fetchData();
   }
 
@@ -163,6 +164,7 @@ class RecipesRow extends StatelessWidget {
             rating: recipes[recipeIndex].rating.toString(),
             thumbnailUrl: recipes[recipeIndex].images,
             globalId: recipes[recipeIndex].globalID,
+            description: recipes[recipeIndex].description,
           );
         },
       ),

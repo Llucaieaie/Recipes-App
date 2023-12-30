@@ -21,9 +21,11 @@ class RecipeApi {
     List _temp = [];
 
     for (var i in data['feed']) {
-      _temp.add(i['content']['details']);
+      var details = i['content']['details'];
+      details['text'] = i['content']['description']; // Añade la descripción al objeto details
+      _temp.add(details);
     }
-
+    
     return Recipe.recipesFromSnapshot(_temp);
   }
 

@@ -9,7 +9,7 @@ class DescriptionScreen extends StatefulWidget {
   final String cookTime;
   final String thumbnailUrl;
   final String globalId;
-  //final String description;
+  final String description;
 
   const DescriptionScreen({
     required this.title,
@@ -17,7 +17,7 @@ class DescriptionScreen extends StatefulWidget {
     required this.rating,
     required this.thumbnailUrl,
     required this.globalId,
-    //required this.description,
+    required this.description,
   });
 
   @override
@@ -108,7 +108,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
           Column(
             children: [
               RecipeTitle(title: widget.title),
-              Text("data", style: TextStyle(color: Colors.black),),
+              RecipeDescription(description: widget.description,),
             ],
           ))
       ],
@@ -159,11 +159,11 @@ class RecipeTitle extends StatelessWidget {
     return Align(
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 15, 0, 25),
-        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 20,
             color: Colors.black,
           ),
           overflow: TextOverflow.ellipsis,
@@ -173,5 +173,32 @@ class RecipeTitle extends StatelessWidget {
       ),
       alignment: Alignment.center,
     );
+  }
+}
+
+class RecipeDescription extends StatelessWidget {
+  const RecipeDescription({
+    super.key,
+    required this.description,
+  });
+
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        //margin: EdgeInsets.fromLTRB(0, 15, 0, 25),
+        padding: EdgeInsets.symmetric(horizontal: 25.0),
+        child: Text(
+          description,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+          ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 8,
+          textAlign: TextAlign.justify,
+        ),
+      );
   }
 }
