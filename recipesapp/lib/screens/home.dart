@@ -3,6 +3,7 @@ import 'package:recipesapp/models/category.dart';
 import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/models/recipeAPI.dart';
 import 'package:recipesapp/screens/widgets/recipe_card.dart';
+import 'package:recipesapp/screens/widgets/recipe_card_reduced.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -81,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: _isLoading
             ? Center(child: CircularProgressIndicator())
-            : Column(
+            : ListView(
                 children: [
                   RecipesCategory(
                     categories: _categories,
@@ -105,6 +106,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     categories: _categories,
                     categoryId: 3,
                   ),
+                  RecipesColumn(
+                    recipes: _recipes,
+                    startIndex: 10,
+                    endIndex: 18,
+                  )
                 ],
               ));
   }
@@ -167,6 +173,41 @@ class RecipesRow extends StatelessWidget {
             description: recipes[recipeIndex].description,
           );
         },
+      ),
+    );
+  }
+}
+
+class RecipesColumn extends StatelessWidget {
+  const RecipesColumn({
+    Key? key,
+    required this.recipes,
+    required this.startIndex,
+    required this.endIndex,
+  }) : super(key: key);
+
+  final List<Recipe> recipes;
+  final int startIndex;
+  final int endIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: List.generate(
+          endIndex - startIndex,
+          (index) {
+            final recipeIndex = startIndex + index;
+            return RecipeCardReduced(
+              title: recipes[recipeIndex].name,
+              cookTime: recipes[recipeIndex].time,
+              rating: recipes[recipeIndex].rating.toString(),
+              thumbnailUrl: recipes[recipeIndex].images,
+              globalId: recipes[recipeIndex].globalID,
+              description: recipes[recipeIndex].description,
+            );
+          },
+        ),
       ),
     );
   }

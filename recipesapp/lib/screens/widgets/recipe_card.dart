@@ -8,14 +8,16 @@ class RecipeCard extends StatelessWidget {
   final String thumbnailUrl;
   final String globalId;
   final String description;
-  RecipeCard(
-      {required this.title,
-      required this.cookTime,
-      required this.rating,
-      required this.thumbnailUrl,
-      required this.globalId,
-      required this.description,
-      });
+
+  RecipeCard({
+    required this.title,
+    required this.cookTime,
+    required this.rating,
+    required this.thumbnailUrl,
+    required this.globalId,
+    required this.description,
+  });
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
