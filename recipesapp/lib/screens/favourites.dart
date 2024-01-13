@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recipesapp/screens/widgets/categories_bar.dart';
+import 'package:recipesapp/models/recipe.dart';
+import 'package:recipesapp/screens/widgets/recipe_card.dart';
+import 'package:recipesapp/screens/home.dart';
 
 class FavouritesScreen extends StatelessWidget {
-  const FavouritesScreen({super.key});
+  final List<Recipe> recipes;
+  FavouritesScreen({super.key, required this.recipes});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +24,14 @@ class FavouritesScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const Column(
+      body: Column(
         children: [
           Categories(),
+          RecipesColumn(
+            recipes: recipes,
+            startIndex: 0,
+            endIndex: recipes.length,
+          )
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

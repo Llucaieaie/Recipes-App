@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:recipesapp/models/category.dart';
 import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/models/recipeAPI.dart';
+import 'package:recipesapp/screens/favourites.dart';
 import 'package:recipesapp/screens/widgets/recipe_card.dart';
 import 'package:recipesapp/screens/widgets/recipe_card_reduced.dart';
+
+//Variable global para lista de favoritos
+List<Recipe> favouriteRecipes = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late List<Recipe> _recipes;
   late List<Categories> _categories;
+  late int _currentIndex = 1;
 
   bool _isLoading = true;
 
@@ -43,76 +48,90 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.greenAccent,
-          elevation: 5.0,
-          shadowColor: Colors.black,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.restaurant),
-              SizedBox(width: 10),
-              Text('Food Recipes'),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 1, //_currentIndex,
-          // onTap: (index) {
-          //   // Handle navigation to different pages based on index
-          //   setState(() {
-          //     _currentIndex = index;
-          //     // Add logic to navigate to different pages based on index
-          //   });
-          // },
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark),
-              label: 'Saved',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'Shopping list',
-            ),
+      appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
+        elevation: 5.0,
+        shadowColor: Colors.black,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.restaurant),
+            SizedBox(width: 10),
+            Text('Food Recipes'),
           ],
         ),
-        body: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : ListView(
-                children: [
-                  RecipesCategory(
-                    categories: _categories,
-                    categoryId: 0,
-                  ),
-                  RecipesRow(
-                    recipes: _recipes,
-                    startIndex: 0,
-                    endIndex: 5,
-                  ),
-                  RecipesCategory(
-                    categories: _categories,
-                    categoryId: 1,
-                  ),
-                  RecipesRow(
-                    recipes: _recipes,
-                    startIndex: 5,
-                    endIndex: 10,
-                  ),
-                  RecipesCategory(
-                    categories: _categories,
-                    categoryId: 3,
-                  ),
-                  RecipesColumn(
-                    recipes: _recipes,
-                    startIndex: 10,
-                    endIndex: 18,
-                  )
-                ],
-              ));
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          // Handle navigation to different pages based on index
+          setState(() {
+            _currentIndex = index;
+            // Add logic to navigate to different pages based on index
+            switch (index) {
+              case 0:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            FavouritesScreen(recipes: favouriteRecipes)));
+                break;
+              case 1:
+                break;
+              case 2:
+                break;
+            }
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark),
+            label: 'Saved',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Shopping list',
+          ),
+        ],
+      ),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView(
+              children: [
+                RecipesCategory(
+                  categories: _categories,
+                  categoryId: 0,
+                ),
+                RecipesRow(
+                  recipes: _recipes,
+                  startIndex: 0,
+                  endIndex: 5,
+                ),
+                RecipesCategory(
+                  categories: _categories,
+                  categoryId: 1,
+                ),
+                RecipesRow(
+                  recipes: _recipes,
+                  startIndex: 5,
+                  endIndex: 10,
+                ),
+                RecipesCategory(
+                  categories: _categories,
+                  categoryId: 3,
+                ),
+                RecipesColumn(
+                  recipes: _recipes,
+                  startIndex: 10,
+                  endIndex: 18,
+                )
+              ],
+            ),
+    );
   }
 }
 
@@ -179,14 +198,14 @@ class RecipesRow extends StatelessWidget {
 }
 
 class RecipesColumn extends StatelessWidget {
-  const RecipesColumn({
+  RecipesColumn({
     Key? key,
     required this.recipes,
     required this.startIndex,
     required this.endIndex,
   }) : super(key: key);
 
-  final List<Recipe> recipes;
+  List<Recipe> recipes;
   final int startIndex;
   final int endIndex;
 

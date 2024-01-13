@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/screens/description.dart';
+import 'package:recipesapp/screens/home.dart';
 
 class RecipeCard extends StatelessWidget {
   final String title;
@@ -65,7 +67,14 @@ class RecipeCard extends StatelessWidget {
           child: Stack(
             children: [
               RecipeTitle(title: title),
-              Marker(),
+              Marker(
+                  recipe: Recipe(
+                      name: title,
+                      rating: double.parse(rating),
+                      images: thumbnailUrl,
+                      time: cookTime,
+                      globalID: globalId,
+                      description: description)),
               Align(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,7 +156,8 @@ class RecipeRating extends StatelessWidget {
 }
 
 class Marker extends StatefulWidget {
-  const Marker({Key? key}) : super(key: key);
+  const Marker({Key? key, required this.recipe}) : super(key: key);
+  final Recipe recipe;
 
   @override
   _MarkerState createState() => _MarkerState();
@@ -155,13 +165,31 @@ class Marker extends StatefulWidget {
 
 class _MarkerState extends State<Marker> {
   bool isBookmarked = false;
-
+  int saved = 0;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
           isBookmarked = !isBookmarked;
+          if (isBookmarked) {
+            for (var i = 0; i < favouriteRecipes.length; i++) {
+              if (widget.recipe.globalID == favouriteRecipes[i].globalID) {
+                saved++;
+              }
+            }
+            if (saved == 0) {
+              favouriteRecipes.add(widget.recipe);
+            }
+            saved = 0;
+          }
+          if (!isBookmarked) {
+            for (var i = 0; i < favouriteRecipes.length; i++) {
+              if (widget.recipe.globalID == favouriteRecipes[i].globalID) {
+                favouriteRecipes.removeAt(i);
+              }
+            }
+          }
         });
       },
       child: Align(
