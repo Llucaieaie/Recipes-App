@@ -152,7 +152,7 @@ class StartButton extends StatelessWidget {
           // Navigate to the cooking page
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Cooking()), // Replace CookingPage with your actual cooking page
+            MaterialPageRoute(builder: (context) => Cooking(steps: 10)), // Replace CookingPage with your actual cooking page
           );
         },
         style: ElevatedButton.styleFrom(
