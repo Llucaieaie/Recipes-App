@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipesapp/screens/description.dart';
+import 'package:recipesapp/screens/home.dart';
+import 'package:recipesapp/models/recipe.dart';
 
 class RecipeCardReduced extends StatelessWidget {
   final String title;
@@ -45,17 +47,30 @@ class RecipeCardReduced extends StatelessWidget {
           child: Stack(
             children: [
               Align(
-                child: Image(image: NetworkImage(thumbnailUrl), fit: BoxFit.cover, height: 65, width: 65,),
+                child: Image(
+                  image: NetworkImage(thumbnailUrl),
+                  fit: BoxFit.cover,
+                  height: 65,
+                  width: 65,
+                ),
                 alignment: Alignment(-0.9, 0),
               ),
-
               RecipeTitle(title: title),
-              Marker(),
+              Marker(
+                  recipe: Recipe(
+                      name: title,
+                      rating: double.parse(rating),
+                      images: thumbnailUrl,
+                      time: cookTime,
+                      globalID: globalId,
+                      description: description)),
               Align(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Spacer(flex: 2,),
+                    Spacer(
+                      flex: 2,
+                    ),
                     RecipeRating(rating: rating),
                     Spacer(),
                     RecipeTime(cookTime: cookTime)
@@ -90,7 +105,10 @@ class RecipeTime extends StatelessWidget {
             size: 16,
           ),
           SizedBox(width: 5),
-          Text(cookTime, style: TextStyle(color: Colors.black, fontSize: 14),),
+          Text(
+            cookTime,
+            style: TextStyle(color: Colors.black, fontSize: 14),
+          ),
         ],
       ),
     );
@@ -126,7 +144,8 @@ class RecipeRating extends StatelessWidget {
 }
 
 class Marker extends StatefulWidget {
-  const Marker({Key? key}) : super(key: key);
+  const Marker({Key? key, required this.recipe}) : super(key: key);
+  final Recipe recipe;
 
   @override
   _MarkerState createState() => _MarkerState();
@@ -134,13 +153,31 @@ class Marker extends StatefulWidget {
 
 class _MarkerState extends State<Marker> {
   bool isBookmarked = false;
-
+  int saved = 0;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
           isBookmarked = !isBookmarked;
+          if (isBookmarked) {
+            for (var i = 0; i < favouriteRecipes.length; i++) {
+              if (widget.recipe.globalID == favouriteRecipes[i].globalID) {
+                saved++;
+              }
+            }
+            if (saved == 0) {
+              favouriteRecipes.add(widget.recipe);
+            }
+            saved = 0;
+          }
+          if (!isBookmarked) {
+            for (var i = 0; i < favouriteRecipes.length; i++) {
+              if (widget.recipe.globalID == favouriteRecipes[i].globalID) {
+                favouriteRecipes.removeAt(i);
+              }
+            }
+          }
         });
       },
       child: Align(
@@ -149,7 +186,7 @@ class _MarkerState extends State<Marker> {
           size: 35,
           color: Colors.yellow,
         ),
-        alignment: Alignment(0.9, -1.15),
+        alignment: Alignment(0.9, -1),
       ),
     );
   }
@@ -170,10 +207,7 @@ class RecipeTitle extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(80, 0, 80, 0),
         child: Text(
           title,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black
-          ),
+          style: TextStyle(fontSize: 16, color: Colors.black),
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           textAlign: TextAlign.center,

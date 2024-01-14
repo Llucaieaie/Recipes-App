@@ -26,7 +26,6 @@ class FavouritesScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Categories(),
           RecipesColumn(
             recipes: recipes,
             startIndex: 0,
