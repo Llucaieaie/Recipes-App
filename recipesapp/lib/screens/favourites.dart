@@ -62,6 +62,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               case 0:
                 break;
               case 1:
+                Navigator.pop(context);
                 break;
               case 2:
                 break;
