@@ -41,7 +41,7 @@ class Ingredient extends StatelessWidget {
                   ),
                 ),
               ),
-                Align(
+              Align(
                 alignment: Alignment.center,
                 child: Text(
                   middleText,
@@ -50,6 +50,17 @@ class Ingredient extends StatelessWidget {
                     fontSize: fontSize,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+              Positioned(
+                right: 5, // Adjust the right position as needed
+                top: 30, // Adjust the top position as needed
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Add logic to add the current name and quantity to the shopping list
+                    // For example, you might use a callback function passed from the parent widget.
+                  },
+                  child: Text('Add'),
                 ),
               ),
             ],

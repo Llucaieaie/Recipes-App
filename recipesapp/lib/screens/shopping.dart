@@ -4,12 +4,10 @@ import 'package:recipesapp/screens/widgets/ingredients.dart';
 class Shopping extends StatefulWidget {
   final String name;
   final int quantity;
-  final double price;
 
   Shopping({
     required this.name,
     required this.quantity,
-    required this.price,
   });
 
   @override
@@ -29,12 +27,7 @@ class _ShoppingState extends State<Shopping> {
       ),
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              _addShoppingIngredient();
-            },
-            child: Text('Add Shopping Ingredient'),
-          ),
+          
         ],
       ),
     );

@@ -18,6 +18,42 @@ class Cooking extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+     List<Widget> ingredientWidgets = [];
+
+    for (int i = 0; i < numIngredients; i++) {
+      String ingredientName = 'CHICKEN';
+      String ingredientQuantity = '0.5 KG';
+
+      ingredientWidgets.add(
+        Ingredient(
+          leftText: ingredientName,
+          middleText: ingredientQuantity,
+          startColor: Color.fromARGB(255, 140, 236, 111),
+          endColor: const Color.fromARGB(255, 255, 255, 255),
+          fontSize: 18,
+        ),
+      );
+    }
+
+    List<Widget> stepsWidgets = [];
+
+    for (int i = 0; i < numIngredients; i++) {
+      int j = i+1;
+      String ingredientName = 'Step $j';
+      String ingredientQuantity = 'Prepare the oven at 400 degrees';
+
+      stepsWidgets.add(
+        Ingredient(
+          leftText: ingredientName,
+          middleText: ingredientQuantity,
+          startColor: Color.fromARGB(255, 140, 236, 111),
+          endColor: const Color.fromARGB(255, 255, 255, 255),
+          fontSize: 15,
+        ),
+      );
+    }
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: 1,
@@ -30,7 +66,7 @@ class Cooking extends StatelessWidget {
               case 2:
               Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Shopping(name: 'h', quantity: 10, price: 5)),
+              MaterialPageRoute(builder: (context) => Shopping(name: 'h', quantity: 10)),
               );
               break;
             }
@@ -57,27 +93,7 @@ class Cooking extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Ingredient(   
-            leftText: 'CHICKEN BREASTS',
-            middleText: '0.5 KG',
-            startColor: Color.fromARGB(255, 140, 236, 111),
-            endColor: const Color.fromARGB(255, 255, 255, 255),
-            fontSize: 18,
-            ),
-            Ingredient(   
-            leftText: 'OLIVE OIL',
-            middleText: '3 SPOONS',
-            startColor: Color.fromARGB(255, 255, 255, 255),
-            endColor: const Color.fromARGB(255, 140, 236, 111),
-            fontSize: 18,
-            ),       
-            Ingredient(   
-            leftText: 'SEASONINGS',
-            middleText: '10-25 GRAMS',
-            startColor: Color.fromARGB(255, 140, 236, 111),
-            endColor: const Color.fromARGB(255, 255, 255, 255),
-            fontSize: 18,
-            ),
+            ...ingredientWidgets,
             Container(
               height: 60,
               color: const Color.fromARGB(255, 123, 204, 126),
@@ -92,27 +108,7 @@ class Cooking extends StatelessWidget {
                 )
               )
             ),
-            Ingredient(   
-            leftText: 'STEP 1',
-            middleText: 'Clean the chicken and turn on the stove',
-            startColor: Color.fromARGB(255, 140, 236, 111),
-            endColor: const Color.fromARGB(255, 255, 255, 255),
-            fontSize: 15,
-            ),
-            Ingredient(   
-            leftText: 'STEP 2',
-            middleText: 'Prepare the seasoning and put the chicken into the stove at 400 degrees',
-            startColor: Color.fromARGB(255, 255, 255, 255),
-            endColor: const Color.fromARGB(255, 140, 236, 111),
-            fontSize: 15,
-            ),       
-            Ingredient(   
-            leftText: 'STEP 3',
-            middleText: 'Season the chicken',
-            startColor: Color.fromARGB(255, 140, 236, 111),
-            endColor: const Color.fromARGB(255, 255, 255, 255),
-            fontSize: 15,
-            ),
+            ...stepsWidgets,
           ]),
     );
   }
