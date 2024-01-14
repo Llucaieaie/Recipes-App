@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recipesapp/screens/home.dart';
 import 'package:recipesapp/screens/favourites.dart';
 import 'package:recipesapp/screens/reviews.dart';
+import 'package:recipesapp/screens/cooking.dart';
 
 void main(List<String> args) {
   runApp(App());
