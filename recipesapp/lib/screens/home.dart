@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    print("text");
     fetchData();
   }
 
@@ -49,58 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
-        elevation: 5.0,
-        shadowColor: Colors.black,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.restaurant),
-            SizedBox(width: 10),
-            Text('Food Recipes'),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          // Handle navigation to different pages based on index
-          setState(() {
-            _currentIndex = index;
-            // Add logic to navigate to different pages based on index
-            switch (index) {
-              case 0:
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            FavouritesScreen(recipes: favouriteRecipes)));
-                break;
-              case 1:
-                break;
-              case 2:
-                break;
-            }
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Saved',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Shopping list',
-          ),
-        ],
-      ),
+      appBar: TitleBar(),
+      bottomNavigationBar: NavigationBar(context),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView(
               children: [
                 RecipesCategory(
@@ -134,6 +85,62 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
     );
   }
+
+  AppBar TitleBar() {
+    return AppBar(
+      backgroundColor: const Color.fromRGBO(105, 240, 174, 1),
+      elevation: 5.0,
+      shadowColor: Colors.black,
+      title: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.restaurant),
+          SizedBox(width: 10),
+          Text('Food Recipes'),
+        ],
+      ),
+    );
+  }
+
+  BottomNavigationBar NavigationBar(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: _currentIndex,
+      onTap: (index) {
+        // Handle navigation to different pages based on index
+        setState(() {
+          _currentIndex = index;
+          // Add logic to navigate to different pages based on index
+          switch (index) {
+            case 0:
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          FavouritesScreen(recipes: favouriteRecipes)));
+              break;
+            case 1:
+              break;
+            case 2:
+              break;
+          }
+        });
+      },
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bookmark),
+          label: 'Saved',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.list),
+          label: 'Shopping list',
+        ),
+      ],
+    );
+  }
 }
 
 class RecipesCategory extends StatelessWidget {
@@ -153,7 +160,7 @@ class RecipesCategory extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
       child: Text(
         categories[categoryId].category,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 16,
           fontWeight: FontWeight.w600,
