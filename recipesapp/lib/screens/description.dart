@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipesapp/models/recipe.dart';
+import 'package:recipesapp/screens/cooking.dart';
 import 'package:recipesapp/screens/home.dart';
 import 'package:recipesapp/screens/reviews.dart';
 
@@ -139,8 +140,8 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
 
 class StartButton extends StatelessWidget {
   const StartButton({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,21 +149,26 @@ class StartButton extends StatelessWidget {
       padding: const EdgeInsets.all(30.0),
       child: ElevatedButton(
         onPressed: () {
-          // Recipe ingredients and steps screen
+          // Navigate to the cooking page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Cooking()), // Replace CookingPage with your actual cooking page
+          );
         },
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.greenAccent,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            shadowColor: Colors.black, // Sombra del botón
-            padding: EdgeInsets.all(20)),
+          backgroundColor: Colors.greenAccent,
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          shadowColor: Colors.black,
+          padding: EdgeInsets.all(20),
+        ),
         child: Text(
-          'Start cooking!', // Texto dentro del botón
+          'Start cooking!',
           style: TextStyle(
-            fontSize: 18, // Tamaño de fuente
-            color: Colors.white, // Color del texto
+            fontSize: 18,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
