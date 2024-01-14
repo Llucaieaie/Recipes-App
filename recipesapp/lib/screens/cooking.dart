@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipesapp/models/cookingsteps.dart';
 import 'package:recipesapp/models/recipeAPI.dart';
 import 'package:recipesapp/screens/home.dart';
+import 'package:recipesapp/screens/widgets/ingredients.dart';
 
 class Cooking extends StatelessWidget {
   //final List<Cook> totalIngredients;
@@ -39,11 +40,27 @@ class Cooking extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Ingredient(   
+            leftText: 'CHICKEN BREASTS',
+            middleText: '0.5 KG',
+            startColor: Color.fromARGB(255, 140, 236, 111),
+            endColor: const Color.fromARGB(255, 255, 255, 255),
+            ),
+            Ingredient(   
+            leftText: 'OLIVE OIL',
+            middleText: '3 SPOONS',
+            startColor: Color.fromARGB(255, 255, 255, 255),
+            endColor: const Color.fromARGB(255, 140, 236, 111),
+            ),       
+            Ingredient(   
+            leftText: 'SEASONINGS',
+            middleText: '10-25 GRAMS',
+            startColor: Color.fromARGB(255, 140, 236, 111),
+            endColor: const Color.fromARGB(255, 255, 255, 255),
+            ),
             Container(
-              child: Text('hi: $steps'),
-              height: 300,
-              width: 300,
-              color: Colors.black12,
+              height: 60,
+              
             ),
           ]),
     );
