@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recipesapp/models/category.dart';
 import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/models/recipeAPI.dart';
-import 'package:recipesapp/screens/cooking.dart';
 import 'package:recipesapp/screens/favourites.dart';
 import 'package:recipesapp/screens/widgets/recipe_card.dart';
 import 'package:recipesapp/screens/widgets/recipe_card_reduced.dart';
@@ -86,6 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+//------------------------------------------------
+
+
   AppBar TitleBar() {
     return AppBar(
       backgroundColor: const Color.fromRGBO(105, 240, 174, 1),
@@ -143,6 +146,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+
+//------------------------------------------------
+
+
 class RecipesCategory extends StatelessWidget {
   const RecipesCategory({
     Key? key,
@@ -169,6 +176,8 @@ class RecipesCategory extends StatelessWidget {
     );
   }
 }
+
+
 
 class RecipesRow extends StatelessWidget {
   const RecipesRow({
@@ -204,6 +213,8 @@ class RecipesRow extends StatelessWidget {
     );
   }
 }
+
+
 
 class RecipesColumn extends StatelessWidget {
   RecipesColumn({

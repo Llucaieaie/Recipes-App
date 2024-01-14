@@ -11,7 +11,7 @@ class RecipeCard extends StatelessWidget {
   final String globalId;
   final String description;
 
-  RecipeCard({
+  const RecipeCard({super.key, 
     required this.title,
     required this.cookTime,
     required this.rating,
@@ -47,7 +47,7 @@ class RecipeCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.6),
-                offset: Offset(
+                offset: const Offset(
                   0.0,
                   10.0,
                 ),
@@ -76,6 +76,7 @@ class RecipeCard extends StatelessWidget {
                       globalID: globalId,
                       description: description)),
               Align(
+                alignment: Alignment.bottomLeft,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -83,7 +84,6 @@ class RecipeCard extends StatelessWidget {
                     RecipeTime(cookTime: cookTime)
                   ],
                 ),
-                alignment: Alignment.bottomLeft,
               ),
             ],
           ),
@@ -102,20 +102,20 @@ class RecipeTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.4),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.schedule,
             color: Colors.yellow,
             size: 18,
           ),
-          SizedBox(width: 7),
+          const SizedBox(width: 7),
           Text(cookTime),
         ],
       ),
@@ -134,20 +134,20 @@ class RecipeRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.4),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.star,
             color: Colors.yellow,
             size: 18,
           ),
-          SizedBox(width: 7),
+          const SizedBox(width: 7),
           Text(rating),
         ],
       ),
@@ -193,12 +193,12 @@ class _MarkerState extends State<Marker> {
         });
       },
       child: Align(
+        alignment: const Alignment(0.9, -1),
         child: Icon(
           isBookmarked ? Icons.bookmark_add : Icons.bookmark_add_outlined,
           size: 35,
           color: Colors.yellow,
         ),
-        alignment: Alignment(0.9, -1),
       ),
     );
   }
@@ -215,11 +215,12 @@ class RecipeTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
+      alignment: Alignment.center,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 19,
           ),
           overflow: TextOverflow.ellipsis,
@@ -227,7 +228,6 @@ class RecipeTitle extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      alignment: Alignment.center,
     );
   }
 }
