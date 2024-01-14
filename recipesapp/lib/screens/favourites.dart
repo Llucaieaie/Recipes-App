@@ -4,11 +4,16 @@ import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/screens/widgets/recipe_card.dart';
 import 'package:recipesapp/screens/home.dart';
 
-class FavouritesScreen extends StatelessWidget {
-  final List<Recipe> recipes;
+class FavouritesScreen extends StatefulWidget {
   FavouritesScreen({super.key, required this.recipes});
-
+  final List<Recipe> recipes;
   @override
+  State<FavouritesScreen> createState() => _FavouritesScreenState();
+}
+
+class _FavouritesScreenState extends State<FavouritesScreen> {
+  @override
+  late int _currentIndex = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,25 +29,46 @@ class FavouritesScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Categories(),
-          RecipesColumn(
-            recipes: recipes,
-            startIndex: 0,
-            endIndex: recipes.length,
-          )
-        ],
-      ),
+      body: widget.recipes.isEmpty
+          ? Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+              child: Text(
+                "No recipes found yet",
+                style: TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          : Column(
+              children: [
+                RecipesColumn(
+                  recipes: widget.recipes,
+                  startIndex: 0,
+                  endIndex: widget.recipes.length,
+                )
+              ],
+            ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1, //_currentIndex,
-        // onTap: (index) {
-        //   // Handle navigation to different pages based on index
-        //   setState(() {
-        //     _currentIndex = index;
-        //     // Add logic to navigate to different pages based on index
-        //   });
-        // },
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          // Handle navigation to different pages based on index
+          setState(() {
+            _currentIndex = index;
+            // Add logic to navigate to different pages based on index
+            switch (index) {
+              case 0:
+                break;
+              case 1:
+                Navigator.pop(context);
+                break;
+              case 2:
+                break;
+            }
+          });
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark),
