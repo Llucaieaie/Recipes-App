@@ -6,6 +6,7 @@ class Ingredient extends StatelessWidget {
   final Color startColor;
   final Color endColor;
   final double fontSize;
+  final VoidCallback? onAddPressed;
 
   Ingredient({
     required this.leftText,
@@ -13,6 +14,7 @@ class Ingredient extends StatelessWidget {
     required this.startColor,
     required this.endColor,
     required this.fontSize,
+    this.onAddPressed,
   });
 
   @override
@@ -52,17 +54,15 @@ class Ingredient extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                right: 5, // Adjust the right position as needed
-                top: 30, // Adjust the top position as needed
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Add logic to add the current name and quantity to the shopping list
-                    // For example, you might use a callback function passed from the parent widget.
-                  },
-                  child: Text('Add'),
+              if (onAddPressed != null) 
+                Positioned(
+                  right: 5,
+                  top: 30,
+                  child: ElevatedButton(
+                    onPressed: onAddPressed,
+                    child: Text('Add'),
+                  ),
                 ),
-              ),
             ],
           ),
         ),

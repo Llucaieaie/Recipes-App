@@ -12,6 +12,17 @@ class Shopping extends StatefulWidget {
 
   @override
   _ShoppingState createState() => _ShoppingState();
+
+  // Define a static method to add shopping ingredients
+  static void addShoppingIngredient(List<Ingredient> shoppingIngredients, String name, int quantity) {
+    shoppingIngredients.add(Ingredient(
+      leftText: name,
+      middleText: '${quantity} ${quantity > 1 ? 'PCS' : 'PC'}',
+      startColor: Color.fromARGB(255, 140, 236, 111),
+      endColor: const Color.fromARGB(255, 255, 255, 255),
+      fontSize: 18,
+    ));
+  }
 }
 
 class _ShoppingState extends State<Shopping> {
@@ -27,21 +38,21 @@ class _ShoppingState extends State<Shopping> {
       ),
       body: Column(
         children: [
-          
+          Text('$shoppingIngredients',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          )
         ],
       ),
     );
   }
 
+  // Call the static method to add a shopping ingredient
   void _addShoppingIngredient() {
     setState(() {
-      shoppingIngredients.add(Ingredient(
-        leftText: widget.name,
-        middleText: '${widget.quantity} ${widget.quantity > 1 ? 'PCS' : 'PC'}',
-        startColor: Color.fromARGB(255, 140, 236, 111),
-        endColor: const Color.fromARGB(255, 255, 255, 255),
-        fontSize: 18,
-      ));
+      Shopping.addShoppingIngredient(shoppingIngredients, widget.name, widget.quantity);
     });
   }
 }
+
