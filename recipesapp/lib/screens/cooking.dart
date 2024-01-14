@@ -3,6 +3,7 @@ import 'package:recipesapp/models/cookingsteps.dart';
 import 'package:recipesapp/models/recipeAPI.dart';
 import 'package:recipesapp/screens/home.dart';
 import 'package:recipesapp/screens/widgets/ingredients.dart';
+import 'package:recipesapp/screens/shopping.dart';
 
 class Cooking extends StatelessWidget {
   //final List<Cook> totalIngredients;
@@ -20,6 +21,20 @@ class Cooking extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: 1,
+                  onTap: (index) {
+            switch (index) {
+              case 0:
+                break;
+              case 1:;
+                break;
+              case 2:
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Shopping(name: 'h', quantity: 10, price: 5)),
+              );
+              break;
+            }
+          },
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.bookmark),
