@@ -5,12 +5,14 @@ class Ingredient extends StatelessWidget {
   final String middleText;
   final Color startColor;
   final Color endColor;
+  final double fontSize;
 
   Ingredient({
     required this.leftText,
     required this.middleText,
     required this.startColor,
     required this.endColor,
+    required this.fontSize,
   });
 
   @override
@@ -45,7 +47,7 @@ class Ingredient extends StatelessWidget {
                   middleText,
                   style: TextStyle(
                     color: Color.fromARGB(255, 255, 159, 15),
-                    fontSize: 18,
+                    fontSize: fontSize,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
