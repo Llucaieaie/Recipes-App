@@ -119,20 +119,27 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                           ),
                         ),
                       ),
-                      Marker(),
+                      Marker(
+                          recipe: Recipe(
+                              name: widget.title,
+                              rating: double.parse(widget.rating),
+                              images: widget.thumbnailUrl,
+                              time: widget.cookTime,
+                              globalID: widget.globalId,
+                              description: widget.description)),
                     ]))),
             Expanded(
                 child: Column(
-                  children: [
-                    RecipeTitle(title: widget.title),
-                    RecipeDescription(
-                      description: widget.description,
-                    ),
-                    Spacer(),
-                    RecipeTime(time: widget.cookTime),
-                    StartButton()
-                  ],
-                ))
+              children: [
+                RecipeTitle(title: widget.title),
+                RecipeDescription(
+                  description: widget.description,
+                ),
+                Spacer(),
+                RecipeTime(time: widget.cookTime),
+                StartButton()
+              ],
+            ))
           ],
         ));
   }
@@ -152,7 +159,11 @@ class StartButton extends StatelessWidget {
           // Navigate to the cooking page
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Cooking(steps: 3, numIngredients: 3,)), // Replace CookingPage with your actual cooking page
+            MaterialPageRoute(
+                builder: (context) => Cooking(
+                      steps: 3,
+                      numIngredients: 3,
+                    )), // Replace CookingPage with your actual cooking page
           );
         },
         style: ElevatedButton.styleFrom(
@@ -178,7 +189,8 @@ class StartButton extends StatelessWidget {
 }
 
 class Marker extends StatefulWidget {
-  const Marker({Key? key}) : super(key: key);
+  const Marker({Key? key, required this.recipe}) : super(key: key);
+  final Recipe recipe;
 
   @override
   _MarkerState createState() => _MarkerState();
@@ -186,22 +198,40 @@ class Marker extends StatefulWidget {
 
 class _MarkerState extends State<Marker> {
   bool isBookmarked = false;
-
+  int saved = 0;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
           isBookmarked = !isBookmarked;
+          if (isBookmarked) {
+            for (var i = 0; i < favouriteRecipes.length; i++) {
+              if (widget.recipe.globalID == favouriteRecipes[i].globalID) {
+                saved++;
+              }
+            }
+            if (saved == 0) {
+              favouriteRecipes.add(widget.recipe);
+            }
+            saved = 0;
+          }
+          if (!isBookmarked) {
+            for (var i = 0; i < favouriteRecipes.length; i++) {
+              if (widget.recipe.globalID == favouriteRecipes[i].globalID) {
+                favouriteRecipes.removeAt(i);
+              }
+            }
+          }
         });
       },
       child: Align(
         child: Icon(
           isBookmarked ? Icons.bookmark_add : Icons.bookmark_add_outlined,
-          size: 70,
+          size: 35,
           color: Colors.yellow,
         ),
-        alignment: Alignment(1, -1.05),
+        alignment: Alignment(0.9, -1),
       ),
     );
   }
