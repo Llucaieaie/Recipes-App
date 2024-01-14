@@ -3,10 +3,11 @@ import 'package:recipesapp/screens/widgets/categories_bar.dart';
 import 'package:recipesapp/models/recipe.dart';
 import 'package:recipesapp/screens/widgets/recipe_card.dart';
 import 'package:recipesapp/screens/home.dart';
+import 'package:recipesapp/screens/widgets/recipe_card_reduced.dart';
 
 class FavouritesScreen extends StatefulWidget {
   FavouritesScreen({super.key, required this.recipes});
-  final List<Recipe> recipes;
+  List<Recipe> recipes;
   @override
   State<FavouritesScreen> createState() => _FavouritesScreenState();
 }
@@ -14,6 +15,9 @@ class FavouritesScreen extends StatefulWidget {
 class _FavouritesScreenState extends State<FavouritesScreen> {
   @override
   late int _currentIndex = 0;
+  TextEditingController controller = TextEditingController();
+  late List<Recipe> backupRecipes = widget.recipes;
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -30,25 +34,66 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         ),
       ),
       body: widget.recipes.isEmpty
-          ? Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
-              child: Text(
-                "No recipes found yet",
-                style: TextStyle(
-                  color: Colors.blueGrey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+          ? Column(
+              children: [
+                Container(
+                    margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    child: TextField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        hintText: 'Recipe name',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(color: Colors.green)),
+                      ),
+                      onChanged: searchRecipe,
+                    )),
+                Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+                  child: Text(
+                    "No recipes found",
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                )
+              ],
             )
           : Column(
               children: [
-                RecipesColumn(
-                  recipes: widget.recipes,
-                  startIndex: 0,
-                  endIndex: widget.recipes.length,
-                )
+                Container(
+                    margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    child: TextField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        hintText: 'Recipe name',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(color: Colors.green)),
+                      ),
+                      onChanged: searchRecipe,
+                    )),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: widget.recipes.length,
+                    itemBuilder: (context, index) {
+                      final recipe = widget.recipes[index];
+
+                      return RecipeCardReduced(
+                          title: recipe.name,
+                          cookTime: recipe.time,
+                          rating: recipe.rating.toString(),
+                          thumbnailUrl: recipe.images,
+                          globalId: recipe.globalID,
+                          description: recipe.description);
+                    },
+                  ),
+                ),
               ],
             ),
       bottomNavigationBar: BottomNavigationBar(
@@ -85,5 +130,16 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         ],
       ),
     );
+  }
+
+  void searchRecipe(String query) {
+    widget.recipes = backupRecipes;
+    final results = widget.recipes.where((recipe) {
+      final recipeName = recipe.name.toLowerCase();
+      final input = query.toLowerCase();
+
+      return recipeName.contains(input);
+    }).toList();
+    setState(() => widget.recipes = results);
   }
 }
